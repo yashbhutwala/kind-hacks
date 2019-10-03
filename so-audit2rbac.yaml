@@ -1,0 +1,104 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    audit2rbac.liggitt.net/version: v0.7.0-4-g1b3a55d685-dirty
+  labels:
+    audit2rbac.liggitt.net/generated: "true"
+    audit2rbac.liggitt.net/user: system-serviceaccount-so-one-synopsys-operator
+  name: audit2rbac:system:serviceaccount:so-one:synopsys-operator
+  namespace: so-one
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resourceNames:
+  - blackduck-secret
+  resources:
+  - secrets
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+- apiGroups:
+  - route.openshift.io
+  resources:
+  - routes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - synopsys.com
+  resources:
+  - alerts
+  - blackducks
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    audit2rbac.liggitt.net/version: v0.7.0-4-g1b3a55d685-dirty
+  labels:
+    audit2rbac.liggitt.net/generated: "true"
+    audit2rbac.liggitt.net/user: system-serviceaccount-so-one-synopsys-operator
+  name: audit2rbac:system:serviceaccount:so-one:synopsys-operator
+rules:
+- nonResourceURLs:
+  - /version/openshift?timeout=32s
+  verbs:
+  - get
+- nonResourceURLs:
+  - /version?timeout=32s
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    audit2rbac.liggitt.net/version: v0.7.0-4-g1b3a55d685-dirty
+  labels:
+    audit2rbac.liggitt.net/generated: "true"
+    audit2rbac.liggitt.net/user: system-serviceaccount-so-one-synopsys-operator
+  name: audit2rbac:system:serviceaccount:so-one:synopsys-operator
+  namespace: so-one
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: audit2rbac:system:serviceaccount:so-one:synopsys-operator
+subjects:
+- kind: ServiceAccount
+  name: synopsys-operator
+  namespace: so-one
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    audit2rbac.liggitt.net/version: v0.7.0-4-g1b3a55d685-dirty
+  labels:
+    audit2rbac.liggitt.net/generated: "true"
+    audit2rbac.liggitt.net/user: system-serviceaccount-so-one-synopsys-operator
+  name: audit2rbac:system:serviceaccount:so-one:synopsys-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: audit2rbac:system:serviceaccount:so-one:synopsys-operator
+subjects:
+- kind: ServiceAccount
+  name: synopsys-operator
+  namespace: so-one

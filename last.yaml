@@ -1,0 +1,107 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    audit2rbac.liggitt.net/version: v0.7.0-4-g1b3a55d685-dirty
+  labels:
+    audit2rbac.liggitt.net/generated: "true"
+    audit2rbac.liggitt.net/user: system-serviceaccount-so-one-synopsys-operator
+  name: audit2rbac:system:serviceaccount:so-one:synopsys-operator
+  namespace: so-one
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - replicationcontrollers
+  - secrets
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resourceNames:
+  - so-one
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - persistentvolumeclaims
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - serviceaccounts
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - rolebindings
+  - roles
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - route.openshift.io
+  resources:
+  - routes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - synopsys.com
+  resources:
+  - alerts
+  - blackducks
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - synopsys.com
+  resourceNames:
+  - alt
+  resources:
+  - alerts
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - synopsys.com
+  resourceNames:
+  - bd
+  resources:
+  - blackducks
+  verbs:
+  - get
+  - patch
+  - update
+---
