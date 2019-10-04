@@ -1,0 +1,54 @@
+# three node (two workers) cluster config
+kind: Cluster
+apiVersion: kind.sigs.k8s.io/v1alpha3
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.11.10
+  - role: worker
+    image: kindest/node:v1.11.10
+  - role: worker
+    image: kindest/node:v1.11.10
+# kubeadmConfigPatches:
+#   - |
+#     # v1alpha2 works for 1.11, 1.12 and 1.13
+#     apiVersion: kubeadm.k8s.io/v1alpha2
+#     kind: ClusterConfiguration
+#     metadata:
+#       name: config
+#     apiServer:
+#       extraArgs:
+#         audit-log-path: /var/log/apiserver-audit.log
+#         audit-policy-file: /etc/kubernetes/audit-policy.yaml
+#     apiServerExtraVolumes:
+#     - name: auditpolicy
+#       pathType: FileOrCreate
+#       readOnly: true
+#       hostPath: /etc/kubernetes/audit-policy.yaml
+#       mountPath: /etc/kubernetes/audit-policy.yaml
+#     - name: auditlog
+#       pathType: FileOrCreate
+#       readOnly: false
+#       hostPath: /var/log/apiserver-audit.log
+#       mountPath: /var/log/apiserver-audit.log
+  # - |
+  #   # v1beta2 only works for 1.15+
+  #   # source: https://github.com/kubernetes/test-infra/pull/12388/files#diff-7504167c4f27f5c2160097ad2f8c8f1aR115
+  #   apiVersion: kubeadm.k8s.io/v1beta2
+  #   kind: ClusterConfiguration
+  #   metadata:
+  #     name: config
+  #   apiServer:
+  #     extraArgs:
+  #       audit-log-path: /var/log/apiserver-audit.log
+  #       audit-policy-file: /etc/kubernetes/audit-policy.yaml
+  #     extraVolumes:
+  #       - name: auditpolicy
+  #         pathType: File
+  #         readOnly: true
+  #         hostPath: /etc/kubernetes/audit-policy.yaml
+  #         mountPath: /etc/kubernetes/audit-policy.yaml
+  #       - name: auditlog
+  #         pathType: File
+  #         readOnly: false
+  #         hostPath: /var/log/apiserver-audit.log
+  #         mountPath: /var/log/apiserver-audit.log

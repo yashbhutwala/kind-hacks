@@ -3,20 +3,26 @@ kind: Cluster
 apiVersion: kind.sigs.k8s.io/v1alpha3
 nodes:
   - role: control-plane
+    image: kindest/node:v1.15.3
     extraMounts:
-      - hostPath: /Users/bhutwala/kind/audit-policy.yaml
+      # Comment this if you don't apiserver audit logs
+      - hostPath: /Users/bhutwala/kind-hacks/audit-policy.yaml
         containerPath: /etc/kubernetes/audit-policy.yaml
-      - hostPath: /Users/bhutwala/kind/apiserver-audit.log
+      - hostPath: /Users/bhutwala/kind-hacks/apiserver-audit.log
         containerPath: /var/log/apiserver-audit.log
   - role: worker
-    extraPortMappings:
-      - containerPort: 80
-        hostPort: 80
-        listenAddress: "0.0.0.0"
-      - containerPort: 443
-        hostPort: 443
-        listenAddress: "0.0.0.0"
+    image: kindest/node:v1.15.3
+    # Uncomment here if you want to expose certain ports onto localhost
+    # Example here: https://kind.sigs.k8s.io/docs/user/quick-start/#mapping-ports-to-the-host-machine
+    # extraPortMappings:
+    #   - containerPort: 80
+    #     hostPort: 80
+    #     listenAddress: "0.0.0.0"
+    #   - containerPort: 443
+    #     hostPort: 443
+    #     listenAddress: "0.0.0.0"
   - role: worker
+    image: kindest/node:v1.15.3
 kubeadmConfigPatches:
   - |
     # v1beta2 only works for 1.15+

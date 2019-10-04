@@ -4,20 +4,22 @@
 # map host ports 80 and 443 with one of the workers for usage
 # with an ingress deployed as a daemonset or nodeport
 
-kind create cluster --config /Users/bhutwala/kind/kind-multi-node-cluster.yaml --name kind-multi-node-cluster
+## Different versions of Kind
+# https://godoc.org/sigs.k8s.io/kind/pkg/apis/config/v1alpha3#SetDefaults_Node
+# https://hub.docker.com/r/kindest/node/tags?page=1&name=v1.11
+# https://kind.sigs.k8s.io/docs/user/quick-start/#configuring-your-kind-cluster
 
-# all polaris images come from gcr, which can be pulled using the pull secret
-# however, the postgres image comes from a redhat registry, so you have to load it
-# into all the nodes manually
-kind load docker-image registry.access.redhat.com/rhscl/postgresql-10-rhel7:1 --name=kind-multi-node-cluster
+# v1.11 latest
+kind create cluster --image=kindest/node:v1.11.10 --name kind-v1.11.10
 
+# v1.12 latest
+kind create cluster --image=kindest/node:v1.12.10 --name kind-v1.12.10
 
-# edit yamls
+# v1.13 latest
+kind create cluster --image=kindest/node:v1.13.10 --name kind-v1.13.10
 
-edit postgres deployment's mountpath to /var/lib/postgresql/data
-# https://raw.githubusercontent.com/blackducksoftware/releases/Development/polaris/2019.10.0.0.5186.0.0.757.0.0.1363/polarisdb_base.yaml
+# v1.14 latest
+kind create cluster --image=kindest/node:v1.14.6 --name kind-v1.14.6
 
-edit all pvc storage things to run 1G
-
-make eventstore go from 3 -> 1
-(in order to this, have to also edit the init job: https://github.com/blackducksoftware/releases/blob/Development/polaris/2019.10.0.0.5344.0.0.762.0.0.1384/polarisdb_base.yaml#L1267)
+# v1.15 latest
+kind create cluster --image=kindest/node:v1.15.3 --name kind-v1.15.3
