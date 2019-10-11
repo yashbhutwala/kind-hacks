@@ -1,4 +1,7 @@
-# three node (two workers) cluster config
+# three v1.15.3 nodes (1 master, two workers) cluster config
+# enables audit policy on apiserver
+#
+
 kind: Cluster
 apiVersion: kind.sigs.k8s.io/v1alpha3
 nodes:
@@ -32,6 +35,8 @@ kubeadmConfigPatches:
       name: config
     apiServer:
       extraArgs:
+        # https://kind.sigs.k8s.io/docs/user/quick-start/#enable-feature-gates-in-your-cluster
+        "feature-gates": "TTLAfterFinished=true"
         audit-log-path: /var/log/apiserver-audit.log
         audit-policy-file: /etc/kubernetes/audit-policy.yaml
       extraVolumes:
