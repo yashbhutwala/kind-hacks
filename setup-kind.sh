@@ -36,8 +36,6 @@ ngrok http https://localhost &
 
 # kind load docker-image registry.access.redhat.com/rhscl/postgresql-10-rhel7:1 --name=${KIND_CLUSTER_NAME}
 
-
-
 ## TODO: cleanup
-kind delete cluster --name kind-v1.15.3-multi-node-cluster
-docker stop kind-v1.15.3-multi-node-cluster-kind-proxy-443 && docker stop kind-v1.15.3-multi-node-cluster-kind-proxy-80
+# kind delete cluster --name kind-v1.15.3-multi-node-cluster
+# docker stop kind-v1.15.3-multi-node-cluster-kind-proxy-443 && docker stop kind-v1.15.3-multi-node-cluster-kind-proxy-80

@@ -1,0 +1,12 @@
+# three v1.16.2 nodes (1 master, two workers) cluster config
+
+kind: Cluster
+apiVersion: kind.sigs.k8s.io/v1alpha3
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.16.2
+  - role: worker
+    image: kindest/node:v1.16.2
+  - role: worker
+    image: kindest/node:v1.16.2
+

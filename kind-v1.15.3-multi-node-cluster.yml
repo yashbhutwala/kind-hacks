@@ -36,7 +36,8 @@ kubeadmConfigPatches:
     apiServer:
       extraArgs:
         # https://kind.sigs.k8s.io/docs/user/quick-start/#enable-feature-gates-in-your-cluster
-        "feature-gates": "TTLAfterFinished=true"
+        # "feature-gates": "TTLAfterFinished=true"
+        "feature-gates": "ServerSideApply=true"
         audit-log-path: /var/log/apiserver-audit.log
         audit-policy-file: /etc/kubernetes/audit-policy.yaml
       extraVolumes:
