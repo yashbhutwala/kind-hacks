@@ -32,14 +32,15 @@ RUN apk add --no-cache --update wget ca-certificates \
   tar zxf $SYSDIG_VERSION.tar.gz && \
   mv sysdig-$SYSDIG_VERSION sysdig && \
   cd /falco/build && \
-  cmake /src/falco-$FALCO_VERSION && \
-  make driver && \
-  rm -rf /src && \
-  apk del wget ca-certificates \
-    build-base gcc abuild binutils \
-    bc \
-    cmake \
-    git \
-    autoconf
+  cmake /src/falco-$FALCO_VERSION
+# WORKDIR /falco/build
+# RUN make driver && \
+#   rm -rf /src && \
+#   apk del wget ca-certificates \
+#     build-base gcc abuild binutils \
+#     bc \
+#     cmake \
+#     git \
+#     autoconf
 
 CMD ["insmod","/falco/build/driver/falco-probe.ko"]
