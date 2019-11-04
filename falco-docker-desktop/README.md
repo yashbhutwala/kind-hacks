@@ -5,4 +5,4 @@ docker run -it --rm --privileged falco-docker-desktop
 
 docker build --build-arg KERNEL_VERSION=4.14.131 -t falco-docker-desktop .
 
-docker run -e "SYSDIG_SKIP_LOAD=1" -it --rm --name falco --privileged -v /var/run/docker.sock:/host/var/run/docker
+docker run -e "SYSDIG_SKIP_LOAD=1" -it --rm --name falco --privileged -v /var/run/docker.sock:/host/var/run/docker.sock -v /dev:/host/dev -v /proc:/host/proc:ro -v /lib/modules:/host/lib/modules:ro -v /usr:/host/usr:ro falcosecurity/falco:0.18.0
