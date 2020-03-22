@@ -1,25 +1,14 @@
+# kind-hacks
 
-# kind command to run to create a 3 node cluster: 1 master and 2 worker nodes
-# settings enable auditing on the api-server as well as
-# map host ports 80 and 443 with one of the workers for usage
-# with an ingress deployed as a daemonset or nodeport
+## Resources
 
-## Different versions of Kind
-# https://godoc.org/sigs.k8s.io/kind/pkg/apis/config/v1alpha3#SetDefaults_Node
-# https://hub.docker.com/r/kindest/node/tags?page=1&name=v1.11
-# https://kind.sigs.k8s.io/docs/user/quick-start/#configuring-your-kind-cluster
-
-# v1.11 latest
-kind create cluster --image=kindest/node:v1.11.10 --name kind-v1.11.10
-
-# v1.12 latest
-kind create cluster --image=kindest/node:v1.12.10 --name kind-v1.12.10
-
-# v1.13 latest
-kind create cluster --image=kindest/node:v1.13.10 --name kind-v1.13.10
-
-# v1.14 latest
-kind create cluster --image=kindest/node:v1.14.6 --name kind-v1.14.6
-
-# v1.15 latest
-kind create cluster --image=kindest/node:v1.15.3 --name kind-v1.15.3
+* kind [k8s docker images](https://hub.docker.com/r/kindest/node/tags?page=1&name=v1.1), i.e.: kindest/node:v1.17.2
+* kind [configuration](https://kind.sigs.k8s.io/docs/user/configuration/) docs
+* kind [examples](https://github.com/kubernetes-sigs/kind/tree/4b3beebe8d2097b5c2be27de742e0ef15c78ec74/site/static/examples) code
+* kind [godocs](https://pkg.go.dev/sigs.k8s.io/kind@v0.7.0/pkg/apis/config/v1alpha4?tab=doc)
+* kind [CI](https://github.com/kind-ci/examples) examples
+* kind [ingress](https://kind.sigs.k8s.io/docs/user/ingress/) examples
+* kind [local registry](https://kind.sigs.k8s.io/docs/user/local-registry/) docs
+* [engineerd/setup-kind](https://github.com/engineerd/setup-kind) GitHub Action
+* [helm/kind-action](https://github.com/helm/kind-action) GitHub Action
+* [running](https://falco.org/docs/running/#running-falco-in-a-kind-cluster) and [installing](https://falco.org/docs/installation/#helm) Falco Security in Kind
