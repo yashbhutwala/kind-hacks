@@ -1,5 +1,12 @@
 # kind-hacks
 
+## Useful scripts and yamls
+
+* [run kind with registry and ingress enabled](./kind-up-with-registry-and-ingress.sh)
+* [expose a nodeport of a service on your host machine](./expose-nodeport-locally.sh)
+* [kind config to run with calico](./kind-calico.yaml)
+* [kind config with audit logging enabled](./kind-audit-logging.yaml)
+
 ## Resources
 
 * kind [k8s docker images](https://hub.docker.com/r/kindest/node/tags?page=1&name=v1.1), i.e.: kindest/node:v1.17.2

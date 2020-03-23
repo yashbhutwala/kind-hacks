@@ -1,13 +1,45 @@
-# three node (two workers) cluster config
+# enables audit policy on apiserver
 kind: Cluster
 apiVersion: kind.sigs.k8s.io/v1alpha3
 nodes:
   - role: control-plane
-    image: kindest/node:v1.11.10
+    extraMounts:
+      # Comment this if you don't apiserver audit logs
+      - hostPath: /Users/bhutwala/gocode/src/github.com/yashbhutwala/kind-hacks/audit-policy.yaml
+        containerPath: /etc/kubernetes/audit-policy.yaml
+      - hostPath: /Users/bhutwala/gocode/src/github.com/yashbhutwala/kind-hacks/apiserver-audit.log
+        containerPath: /var/log/apiserver-audit.log
   - role: worker
-    image: kindest/node:v1.11.10
   - role: worker
-    image: kindest/node:v1.11.10
+kubeadmConfigPatches:
+  - |
+    # v1beta2 only works for 1.15+
+    apiVersion: kubeadm.k8s.io/v1beta2
+    kind: ClusterConfiguration
+    metadata:
+      name: config
+    apiServer:
+      extraArgs:
+        # https://kind.sigs.k8s.io/docs/user/quick-start/#enable-feature-gates-in-your-cluster
+        # "feature-gates": "TTLAfterFinished=true"
+        "feature-gates": "ServerSideApply=true"
+        audit-log-path: /var/log/apiserver-audit.log
+        audit-policy-file: /etc/kubernetes/audit-policy.yaml
+      extraVolumes:
+        - name: auditpolicy
+          pathType: File
+          readOnly: true
+          hostPath: /etc/kubernetes/audit-policy.yaml
+          mountPath: /etc/kubernetes/audit-policy.yaml
+        - name: auditlog
+          pathType: File
+          readOnly: false
+          hostPath: /var/log/apiserver-audit.log
+          mountPath: /var/log/apiserver-audit.log
+
+
+
+
 # kubeadmConfigPatches:
 #   - |
 #     # v1alpha2 works for 1.11, 1.12 and 1.13

@@ -1,0 +1,21 @@
+# Useful Resources:
+# https://github.com/kubernetes-sigs/kind/issues/891#issue-500462337
+# https://alexbrand.dev/post/creating-a-kind-cluster-with-calico-networking/
+# https://docs.projectcalico.org/v3.10/getting-started/kubernetes/installation/calico#installing-with-the-kubernetes-api-datastore50-nodes-or-less
+
+# Useful Commands:
+# kind get nodes | xargs -n1 -I {} docker exec {} sysctl -w net.ipv4.conf.all.rp_filter=0
+# kubectl apply -f https://docs.projectcalico.org/v3.10/manifests/calico.yaml
+
+kind: Cluster
+apiVersion: kind.sigs.k8s.io/v1alpha3
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.15.3
+  - role: worker
+    image: kindest/node:v1.15.3
+  - role: worker
+    image: kindest/node:v1.15.3
+networking:
+  disableDefaultCNI: false
+  podSubnet: "192.168.0.0/16"
