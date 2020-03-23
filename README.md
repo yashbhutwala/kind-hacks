@@ -16,6 +16,8 @@
 * kind [CI](https://github.com/kind-ci/examples) examples
 * kind [ingress](https://kind.sigs.k8s.io/docs/user/ingress/) examples
 * kind [local registry](https://kind.sigs.k8s.io/docs/user/local-registry/) docs
+* kind [enabling featureGates](https://kind.sigs.k8s.io/docs/user/quick-start/#enable-feature-gates-in-your-cluster) docs
+* kind [exporting cluster logs](https://kind.sigs.k8s.io/docs/user/quick-start/#exporting-cluster-logs) docs
 * [engineerd/setup-kind](https://github.com/engineerd/setup-kind) GitHub Action
 * [helm/kind-action](https://github.com/helm/kind-action) GitHub Action
 * [running](https://falco.org/docs/running/#running-falco-in-a-kind-cluster) and [installing](https://falco.org/docs/installation/#helm) Falco Security in Kind

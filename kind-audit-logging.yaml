@@ -1,10 +1,12 @@
+# Source: https://github.com/kubernetes-sigs/kind/pull/457/files#diff-d9fa0450190d60ba133fb92282a94725R118
 # enables audit policy on apiserver
 kind: Cluster
-apiVersion: kind.sigs.k8s.io/v1alpha3
+apiVersion: kind.sigs.k8s.io/v1alpha4
 nodes:
   - role: control-plane
     extraMounts:
-      # Comment this if you don't apiserver audit logs
+      # edit ./audit-policy.yaml for audit policy
+      # logs will stored to ./apiserver-audit.log
       - hostPath: /Users/bhutwala/gocode/src/github.com/yashbhutwala/kind-hacks/audit-policy.yaml
         containerPath: /etc/kubernetes/audit-policy.yaml
       - hostPath: /Users/bhutwala/gocode/src/github.com/yashbhutwala/kind-hacks/apiserver-audit.log
@@ -22,7 +24,7 @@ kubeadmConfigPatches:
       extraArgs:
         # https://kind.sigs.k8s.io/docs/user/quick-start/#enable-feature-gates-in-your-cluster
         # "feature-gates": "TTLAfterFinished=true"
-        "feature-gates": "ServerSideApply=true"
+        # "feature-gates": "ServerSideApply=true"
         audit-log-path: /var/log/apiserver-audit.log
         audit-policy-file: /etc/kubernetes/audit-policy.yaml
       extraVolumes:
@@ -36,15 +38,14 @@ kubeadmConfigPatches:
           readOnly: false
           hostPath: /var/log/apiserver-audit.log
           mountPath: /var/log/apiserver-audit.log
-
-
-
-
 # kubeadmConfigPatches:
 #   - |
-#     # v1alpha2 works for 1.11, 1.12 and 1.13
+#     # kubeadm.k8s.io/v1alpha2 works for kubeadm 1.11
+#     # kubeadm.k8s.io/v1beta1 works for >= 1.13 and <= 1.18
+#     # kubeadm.k8s.io/v1beta2 works for >= 1.15 and <= ?
 #     apiVersion: kubeadm.k8s.io/v1alpha2
-#     kind: ClusterConfiguration
+#     # MasterConfiguration changed to ClusterConfiguration in 1.13
+#     kind: MasterConfiguration
 #     metadata:
 #       name: config
 #     apiServer:
@@ -53,34 +54,12 @@ kubeadmConfigPatches:
 #         audit-policy-file: /etc/kubernetes/audit-policy.yaml
 #     apiServerExtraVolumes:
 #     - name: auditpolicy
-#       pathType: FileOrCreate
+#       pathType: File
 #       readOnly: true
 #       hostPath: /etc/kubernetes/audit-policy.yaml
 #       mountPath: /etc/kubernetes/audit-policy.yaml
 #     - name: auditlog
-#       pathType: FileOrCreate
+#       pathType: File
 #       readOnly: false
 #       hostPath: /var/log/apiserver-audit.log
 #       mountPath: /var/log/apiserver-audit.log
-  # - |
-  #   # v1beta2 only works for 1.15+
-  #   # source: https://github.com/kubernetes/test-infra/pull/12388/files#diff-7504167c4f27f5c2160097ad2f8c8f1aR115
-  #   apiVersion: kubeadm.k8s.io/v1beta2
-  #   kind: ClusterConfiguration
-  #   metadata:
-  #     name: config
-  #   apiServer:
-  #     extraArgs:
-  #       audit-log-path: /var/log/apiserver-audit.log
-  #       audit-policy-file: /etc/kubernetes/audit-policy.yaml
-  #     extraVolumes:
-  #       - name: auditpolicy
-  #         pathType: File
-  #         readOnly: true
-  #         hostPath: /etc/kubernetes/audit-policy.yaml
-  #         mountPath: /etc/kubernetes/audit-policy.yaml
-  #       - name: auditlog
-  #         pathType: File
-  #         readOnly: false
-  #         hostPath: /var/log/apiserver-audit.log
-  #         mountPath: /var/log/apiserver-audit.log
